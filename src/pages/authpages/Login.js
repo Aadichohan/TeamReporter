@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Input, Button, Row, Col, Card , Typography } from 'antd';
-
+import { Link } from "react-router-dom";
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 const { Title } = Typography;
 function Login() {
 
-
+const LoginHandler = (e) => {
+   
+}
     return (
       <div className="App">
       <Row>
@@ -70,10 +72,11 @@ function Login() {
         {/* <Checkbox>Remember me</Checkbox> */}
       </Form.Item>
       <Form.Item>
-        <Button type="primary" htmlType="submit" className="login-form-button">
-          Log in
+        <Button type="primary" htmlType="submit" className="login-form-button" onClick={LoginHandler}>
+        <Link to="/">Login</Link>
         </Button>
-        Or <a href="/signup">register now!</a>
+        <br/>
+        <Link to="/signup">SignUp</Link>
       </Form.Item>
     </Form>
     </Card>

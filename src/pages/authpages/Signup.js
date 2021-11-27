@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Input, Button, Row, Col, Card , Typography } from 'antd';
-
+import { Link } from "react-router-dom";
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 const { Title } = Typography;
@@ -71,9 +71,10 @@ function Signup() {
       </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit" className="login-form-button">
-          Log in
+          SignUp
         </Button>
-        Or <a href="/signup">register now!</a>
+        <br/>
+        <Link to="/login">Login</Link>
       </Form.Item>
     </Form>
     </Card>
