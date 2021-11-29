@@ -1,9 +1,9 @@
-
+import { Link } from "react-router-dom";
 
 function Home() {
     return (
       <div className="App">
-     Home
+     <Link to="/login">Login</Link>
       </div>
     );
   }
