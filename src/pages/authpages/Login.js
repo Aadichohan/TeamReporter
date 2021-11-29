@@ -3,6 +3,8 @@ import { Form, Input, Button, Row, Col, Card , Typography } from 'antd';
 import { Link } from "react-router-dom";
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
+
+
 const { Title } = Typography;
 function Login() {
 
@@ -11,26 +13,15 @@ const LoginHandler = (e) => {
 }
     return (
       <div className="App">
-      <Row>
-      <Col span={32}></Col>
-      </Row>
+
+
+     
     <Row>
       <Col span={8}>
       <Card style={{ width: 600 }} >
       <Title> Login </Title>
-      <Form
-      name="basic"
-      labelCol={{
-        span: 8,
-      }}
-      wrapperCol={{
-        span: 16,
-      }}
-      initialValues={{
-        remember: true,
-      }}
-    //   onFinish={onFinish}
-    //   onFinishFailed={onFinishFailed}
+      <Form name="basic" labelCol={{span: 8,}} wrapperCol={{ span: 16, }} initialValues={{  remember: true, }}
+    
       autoComplete="off"
     >
       <Form.Item
@@ -75,6 +66,8 @@ const LoginHandler = (e) => {
         <Button type="primary" htmlType="submit" className="login-form-button" onClick={LoginHandler}>
         <Link to="/">Login</Link>
         </Button>
+
+        
         <br/>
         <Link to="/signup">SignUp</Link>
       </Form.Item>
@@ -84,6 +77,7 @@ const LoginHandler = (e) => {
       <Col span={8}></Col>
       <Col span={8}></Col>
     </Row>
+    
       
       </div>
     );
