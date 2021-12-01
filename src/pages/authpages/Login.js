@@ -1,83 +1,52 @@
-import React, { useState, useEffect } from 'react';
-import { Form, Input, Button, Row, Col, Card , Typography } from 'antd';
-import { Link } from "react-router-dom";
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
+
 import 'antd/dist/antd.css';
+import {  TextField ,Card  ,CardContent ,Button ,Typography  ,Grid }  from '@mui/material/';
 
 
-const { Title } = Typography;
-function Login() {
 
-const LoginHandler = (e) => {
-   
-}
+
+
+const Login = () => {
     return (
-      <div className="App">
+      <div className="App"> 
 
 
-     
-    <Row>
-      <Col span={8}>
-      <Card style={{ width: 600 }} >
-      <Title> Login </Title>
-      <Form name="basic" labelCol={{span: 8,}} wrapperCol={{ span: 16, }} initialValues={{  remember: true, }}
-    
-      autoComplete="off"
-    >
-      <Form.Item
-        label="Username"
-        name="username"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your username!',
-          },
-        ]}
-      >
-        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
-      </Form.Item>
-
-      <Form.Item
-        label="Password"
-        name="password"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your password!',
-          },
-        ]}
-      >
-        <Input.Password  prefix={<LockOutlined className="site-form-item-icon" />}
-          type="password"
-          placeholder="Password"/>
-      </Form.Item>
-
-      <Form.Item
-        name="remember"
-        valuePropName="checked"
-        wrapperCol={{
-          offset: 8,
-          span: 16,
-        }}
-      >
-        {/* <Checkbox>Remember me</Checkbox> */}
-      </Form.Item>
-      <Form.Item>
-        <Button type="primary" htmlType="submit" className="login-form-button" onClick={LoginHandler}>
-        <Link to="/">Login</Link>
-        </Button>
-
+<Grid my={10} item md={12}>
+<Card sx={{ minWidth: 275 }}>
+      <CardContent>
+        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+        <TextField style={{width:"400px"}} id="filled-basic" label="Email" variant="filled" />
+        </Typography>
+        <Typography variant="h5" component="div">
+        <TextField style={{width:"400px"}} id="filled-basic" label="Password" variant="filled" />
         
-        <br/>
-        <Link to="/signup">SignUp</Link>
-      </Form.Item>
-    </Form>
+        </Typography>
+        <Typography py={5}   variant="h5" component="div">
+        <Button style={{width:"455px"}} variant="contained" disableElevation>
+      Login
+    </Button>
+    <p style={{color:"#1976d2", fontSize:"15px"}}>
+    <a href="/Signup">Create An Account! </a>
+    </p>
+        
+        </Typography>
+       
+        
+      
+      </CardContent>
+     
     </Card>
-      </Col>
-      <Col span={8}></Col>
-      <Col span={8}></Col>
-    </Row>
-    
+
+  </Grid>
+
+
+      
+
+
+
+      
+
+
       
       </div>
     );

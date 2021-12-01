@@ -1,87 +1,88 @@
-import React, { useState, useEffect } from 'react';
-import { Form, Input, Button, Row, Col, Card , Typography } from 'antd';
-import { Link } from "react-router-dom";
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
+
 import 'antd/dist/antd.css';
-const { Title } = Typography;
-function Signup() {
+
+import React,  { useState} from "react"
+import {  TextField ,Card ,Select ,FormControl,InputLabel ,MenuItem ,CardContent ,Button ,Typography  ,Grid }  from '@mui/material/';
 
 
+
+
+
+
+const Signup = () => {
+  const [age, setAge] = useState('');
+
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
+  
     return (
-      <div className="App">
-      <Row>
-      <Col span={32}></Col>
-      </Row>
-    <Row>
-      <Col span={8}>
-      <Card style={{ width: 600 }} >
-      <Title> Signup </Title>
-      <Form
-      name="basic"
-      labelCol={{
-        span: 8,
-      }}
-      wrapperCol={{
-        span: 16,
-      }}
-      initialValues={{
-        remember: true,
-      }}
-    //   onFinish={onFinish}
-    //   onFinishFailed={onFinishFailed}
-      autoComplete="off"
-    >
-      <Form.Item
-        label="Username"
-        name="username"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your username!',
-          },
-        ]}
-      >
-        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
-      </Form.Item>
+      <div className="App"> 
 
-      <Form.Item
-        label="Password"
-        name="password"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your password!',
-          },
-        ]}
-      >
-        <Input.Password  prefix={<LockOutlined className="site-form-item-icon" />}
-          type="password"
-          placeholder="Password"/>
-      </Form.Item>
+      
 
-      <Form.Item
-        name="remember"
-        valuePropName="checked"
-        wrapperCol={{
-          offset: 8,
-          span: 16,
-        }}
-      >
-        {/* <Checkbox>Remember me</Checkbox> */}
-      </Form.Item>
-      <Form.Item>
-        <Button type="primary" htmlType="submit" className="login-form-button">
-          SignUp
-        </Button>
-        <br/>
-        <Link to="/login">Login</Link>
-      </Form.Item>
-    </Form>
+
+<Grid my={10} item md={12}>
+<Card sx={{ minWidth: 275 }}>
+      <CardContent>
+
+      <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+        <TextField style={{width:"400px"}} id="filled-basic" label="Name" type="Name" variant="filled" />
+        </Typography>
+        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+        <TextField style={{width:"400px"}} id="filled-basic" label="Email" type="Email" variant="filled" />
+        </Typography>
+        <Typography variant="h5" component="div">
+        <TextField style={{width:"400px"}} id="filled-password-input" label="Password"
+          type="password" variant="filled" />
+        
+        </Typography>
+        <Typography py={3} variant="h5" component="div">
+        <FormControl sx={{ m: 1, minWidth: 380 }}>
+        <InputLabel id="demo-simple-select-autowidth-label">Choose the option</InputLabel>
+        <Select
+          labelId="demo-simple-select-autowidth-label"
+          id="demo-simple-select-autowidth"
+          value={age}
+          onChange={handleChange}
+          autoWidth
+          label="Choose the option"
+        >
+          
+          <MenuItem value={10}>TeamLead</MenuItem>
+          <MenuItem value={21}>Employee</MenuItem>
+          
+        </Select>
+      </FormControl>
+
+
+        
+        
+        </Typography>
+        <Typography py={5}   variant="h5" component="div">
+        <Button style={{width:"455px"}} variant="contained" disableElevation>
+        Create An Account
+    </Button>
+    <p style={{color:"#1976d2", fontSize:"15px"}}> <a href="/Login">Already have an Account! </a> </p>
+        
+        </Typography>
+       
+        
+      
+      </CardContent>
+     
     </Card>
-      </Col>
-      <Col span={8}></Col>
-      <Col span={8}></Col>
-    </Row>
+
+  </Grid>
+
+
+      
+
+
+
+      
+
+
       
       </div>
     );
