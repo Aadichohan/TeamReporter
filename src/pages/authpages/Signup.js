@@ -1,12 +1,55 @@
-import React, { useState, useEffect } from 'react';
-import { Form, Input, Button, Row, Col, Card , Typography } from 'antd';
+import React, { useState } from 'react';
+import { Form, Input, Button, Row, Col, Card , Typography,Alert } from 'antd';
 import { Link } from "react-router-dom";
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
+// import {createUserWithEmailAndPassword} from 'firebase/auth';
+import {auth} from '../../fb_auth/firebase-config';
+import {useAuth} from '../../authContext/AuthContext'
 const { Title } = Typography;
-function Signup() {
 
+ function Signup() {
 
+  const [RegisterEmail,setRegisterEmail] = useState("")
+  const [RegisterPassword,setRegisterPassword] = useState("")
+  const [error,setError] = useState("")
+  const [Loading,setLoading] = useState(false)
+//   const RegisterHandler = async (e) => {
+//    try{
+//      const user = await createUserWithEmailAndPassword(auth, RegisterEmail, RegisterPassword);
+//     console.log('RegisterEmail', user);
+
+//    }
+//    catch(e){
+//      console.log(e.message);
+//    }
+//   }
+const {register} = useAuth();
+
+const handleSignup = async () => {
+  // if(RegisterPassword.length < 8){
+  //   return setError("Password can't be less than 8");
+  // }
+  try{
+    console.log('tryblock ', RegisterEmail);
+    setError('')
+    setLoading(true)
+      await  register(RegisterEmail, RegisterPassword)
+  }catch(e){
+    if(e.code == 'auth/email-already-in-use'){
+      setError("email-already-in-use")
+    }
+    else if(e.code == 'auth/weak-password'){
+      setError("Password length should be atleast 6 ")
+    }
+    else{
+      console.log('error ',e);
+       setError(e.message)
+
+    }
+  }
+  setLoading(false)
+}
     return (
       <div className="App">
       <Row>
@@ -16,6 +59,7 @@ function Signup() {
       <Col span={8}>
       <Card style={{ width: 600 }} >
       <Title> Signup </Title>
+     {error && <Alert message={error} type="error" />}
       <Form
       name="basic"
       labelCol={{
@@ -27,26 +71,23 @@ function Signup() {
       initialValues={{
         remember: true,
       }}
+     
     //   onFinish={onFinish}
     //   onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
       <Form.Item
-        label="Username"
-        name="username"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your username!',
-          },
-        ]}
+       name={['user', 'email']} 
+       label="Email" 
+       rules={[{ type: 'email', required: true,
+            message: 'Please input your Email!', }]}
       >
-        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+        <Input  prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Email" onChange={(e)=>setRegisterEmail(e.target.value)} />
       </Form.Item>
 
       <Form.Item
         label="Password"
-        name="password"
+        // name="password"
         rules={[
           {
             required: true,
@@ -56,11 +97,11 @@ function Signup() {
       >
         <Input.Password  prefix={<LockOutlined className="site-form-item-icon" />}
           type="password"
-          placeholder="Password"/>
+          placeholder="Password" onChange={(e)=>setRegisterPassword(e.target.value)}/>
       </Form.Item>
 
       <Form.Item
-        name="remember"
+        // name="remember"
         valuePropName="checked"
         wrapperCol={{
           offset: 8,
@@ -70,11 +111,11 @@ function Signup() {
         {/* <Checkbox>Remember me</Checkbox> */}
       </Form.Item>
       <Form.Item>
-        <Button type="primary" htmlType="submit" className="login-form-button">
+        <Button type="primary" htmlType="submit" onClick={handleSignup} disabled={Loading} className="login-form-button" >
           SignUp
         </Button>
         <br/>
-        <Link to="/login">Login</Link>
+        {/* <Link to="/login">Login</Link> */}
       </Form.Item>
     </Form>
     </Card>

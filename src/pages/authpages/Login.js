@@ -1,14 +1,65 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Form, Input, Button, Row, Col, Card , Typography } from 'antd';
 import { Link } from "react-router-dom";
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
+
+import {signInWithEmailAndPassword} from 'firebase/auth';
+import {auth} from '../../fb_auth/firebase-config';
+
+import {AuthStateChange, AuthHandle} from '../../authHandler/AuthHandler';
+import {useNavigate, Navigate} from 'react-router-dom'
+
+import {useAuth} from '../../authContext/AuthContext'
+
 import 'antd/dist/antd.css';
 const { Title } = Typography;
 function Login() {
-
-const LoginHandler = (e) => {
+  // AuthStateChange();
+  // FBAuthHandler();
+  // AuthHandle();
+  const [LoginEmail,setLoginEmail] = useState("")
+  const [LoginPassword,setLoginPassword] = useState("")
+  const [error,setError] = useState("")
+  const [Loading,setLoading] = useState(false)
+  // const LoginHandler =  async () => {
+  //   let navigate = useNavigate();
+  //   try{
+  //     // localStorage.setItem('isLoggedIn','true')
+  //     const user = await signInWithEmailAndPassword(auth, LoginEmail, LoginPassword);
+  //    console.log('Login ', user);
    
-}
+  //   // navigate("/")
+  //   }
+  //   catch(e){
+  //     console.log(e.message);
+  //   }
+  // }
+  const {login} = useAuth();
+   const HandleLogin = async () => {
+      let navigate = useNavigate();
+ 
+    try{
+      setError('')
+      setLoading(true)
+      await  login(LoginEmail, LoginPassword)
+      console.log('tryblock ', LoginEmail);
+     // navigate('/')
+    }catch(e){
+      if(e.code == 'auth/email-already-in-use'){
+        setError("email-already-in-use")
+      }
+      else if(e.code == 'auth/weak-password'){
+        setError("Password length should be atleast 6 ")
+      }
+      else{
+        console.log('error ',e);
+         setError(e.message)
+  
+      }
+    }
+    setLoading(false)
+  }
+
     return (
       <div className="App">
       <Row>
@@ -34,16 +85,12 @@ const LoginHandler = (e) => {
       autoComplete="off"
     >
       <Form.Item
-        label="Username"
-        name="username"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your username!',
-          },
-        ]}
+        name={['user', 'email']} 
+       label="Email" 
+       rules={[{ type: 'email', required: true,
+            message: 'Please input your Email!', }]}
       >
-        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+        <Input onChange={(e)=>setLoginEmail(e.target.value)} prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Email" />
       </Form.Item>
 
       <Form.Item
@@ -56,7 +103,7 @@ const LoginHandler = (e) => {
           },
         ]}
       >
-        <Input.Password  prefix={<LockOutlined className="site-form-item-icon" />}
+        <Input.Password  onChange={(e)=>setLoginPassword(e.target.value)} prefix={<LockOutlined className="site-form-item-icon" />}
           type="password"
           placeholder="Password"/>
       </Form.Item>
@@ -72,8 +119,8 @@ const LoginHandler = (e) => {
         {/* <Checkbox>Remember me</Checkbox> */}
       </Form.Item>
       <Form.Item>
-        <Button type="primary" htmlType="submit" className="login-form-button" onClick={LoginHandler}>
-        <Link to="/">Login</Link>
+        <Button type="primary" htmlType="submit" className="login-form-button" onClick={HandleLogin}>
+        Login
         </Button>
         <br/>
         <Link to="/signup">SignUp</Link>
